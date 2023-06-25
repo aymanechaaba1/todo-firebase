@@ -4,8 +4,10 @@
 
 2. Start a local dev server
 
-   1. `npm i -g live-server`
-   2. Run `live-server`
+   1. `cd todo-firebase`
+   2. `code .`
+   3. `npm i -g live-server`
+   4. Run `live-server`
 
    Or Install a VSCode extension called 'Live Server' by Ritwick Dey.
 
