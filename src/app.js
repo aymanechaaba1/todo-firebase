@@ -14,7 +14,7 @@ onSnapshot(query, (snapshot) => {
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
     text: doc.data().text,
-    timestamp: doc.data().timestamp.seconds * 1000,
+    timestamp: doc.data().timestamp?.toDate() ?? null,
   }));
 
   const Todos = data.map((todo) => Todo(todo)).join('');

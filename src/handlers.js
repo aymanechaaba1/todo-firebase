@@ -2,7 +2,7 @@
 
 import { serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
 import { addData, getColRef } from './firebase.js';
-import { inputEl } from './dom.js';
+import { inputEl, sendIconTodoEl } from './dom.js';
 
 const todosRef = getColRef('todos');
 
