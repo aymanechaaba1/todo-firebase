@@ -20,3 +20,4 @@
 ## Features
 
 - Full CRUD Functionality
+- Search Todos
