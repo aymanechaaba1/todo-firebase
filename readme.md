@@ -12,3 +12,7 @@
   <img src="https://avatars.githubusercontent.com/u/67109815?s=280&v=4" width="80">
   <img src="https://miro.medium.com/v2/resize:fit:300/1*R4c8lHBHuH5qyqOtZb3h-w.png" width="80">
 </div>
+
+## Features
+
+Full CRUD Functionality
