@@ -7,4 +7,4 @@
    1. <code>npm i live-server</code>
    2. Or Install a VSCode extension called 'Live Server' by Ritwick Dey.
 
-![Firebase](image-1.png)
+![Firebase](image-2.png)
