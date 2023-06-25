@@ -5,4 +5,4 @@
 
 2. Start a local dev server
    1. <code>npm i live-server</code>
-   2. Install a VSCode extension called 'Live Server' by Ritwick Dey.
+   2. Or Install a VSCode extension called 'Live Server' by Ritwick Dey.
