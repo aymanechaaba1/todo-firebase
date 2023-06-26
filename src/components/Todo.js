@@ -10,7 +10,10 @@ const Todo = function ({ id, text, timestamp }) {
     >
       <div class="flex-1">
         <div class="timestamp text-sm text-gray-400">${date}</div>
-        <input class="text-2xl outline-none" value="${text}" readonly />
+        <form class="edit-todo-form">
+          <input class="todo-input text-2xl outline-none" value="${text}" readonly />
+          <button type="submit"></button>
+        </form>
       </div>
       <div class="btns flex items-center gap-3">
         <button class="btn btn-edit hover:text-gray-800">

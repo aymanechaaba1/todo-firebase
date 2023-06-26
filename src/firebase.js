@@ -9,6 +9,7 @@ import {
   orderBy,
   doc,
   deleteDoc,
+  updateDoc,
 } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
@@ -42,6 +43,16 @@ export const addData = async function (ref, doc) {
 export const deleteData = async (id, colName) => {
   try {
     await deleteDoc(doc(db, colName, id));
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateData = async ({ colName, id, newData }) => {
+  try {
+    const docRef = doc(db, colName, id);
+
+    await updateDoc(docRef, newData);
   } catch (err) {
     throw err;
   }

@@ -5,7 +5,7 @@ import { getColRef, getQuery } from './firebase.js';
 import Todo from './components/Todo.js';
 import { formEl, todosContainerEl } from './dom.js';
 import { clear, render } from './helpers.js';
-import { addTodo, removeTodoHandler } from './handlers.js';
+import { addTodo, removeTodoHandler, editTodoHandler } from './handlers.js';
 
 const todosRef = getColRef('todos');
 const query = getQuery(todosRef, 'timestamp');
@@ -25,3 +25,4 @@ onSnapshot(query, (snapshot) => {
 
 formEl.addEventListener('submit', addTodo);
 todosContainerEl.addEventListener('click', removeTodoHandler);
+todosContainerEl.addEventListener('click', editTodoHandler);
