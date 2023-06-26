@@ -1,8 +1,8 @@
 'use strict';
 
 import { serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
-import { addData, getColRef } from './firebase.js';
-import { inputEl, sendIconTodoEl } from './dom.js';
+import { addData, deleteData, getColRef } from './firebase.js';
+import { inputEl } from './dom.js';
 
 const todosRef = getColRef('todos');
 
@@ -18,6 +18,21 @@ export const addTodo = async (e) => {
     });
 
     inputEl.value = '';
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const removeTodoHandler = async (e) => {
+  try {
+    const todoClickedEl = e.target.closest('.todo');
+    const btnTrash = e.target.closest('.btn-trash');
+
+    if (!todoClickedEl) return;
+
+    const { id } = todoClickedEl.dataset;
+
+    btnTrash && (await deleteData(id, 'todos'));
   } catch (err) {
     console.error(err.message);
   }

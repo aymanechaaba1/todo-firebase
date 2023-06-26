@@ -15,7 +15,7 @@ export const formatDate = (timestamp) =>
     year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  }).format(new Date(timestamp));
+  }).format(timestamp);
 
 export const createToastNotification = ({ text }) => {
   Toastify({
