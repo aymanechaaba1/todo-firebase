@@ -5,7 +5,7 @@ const Todo = function ({ id, text, timestamp }) {
 
   return `
     <div
-      class="todo border w-full py-2 px-4 rounded-md flex items-center gap-5"
+      class="todo border w-full py-2 px-4 rounded-lg flex items-center gap-5"
       data-id="${id}"
     >
       <div class="flex-1">
