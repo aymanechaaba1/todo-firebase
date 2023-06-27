@@ -2,22 +2,53 @@
 
 import { serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
 import { addData, deleteData, getColRef, updateData } from './firebase.js';
-import { inputEl } from './dom.js';
+import { btnShowFormEl, modalEl, modalOveryalEl } from './dom.js';
+import { formatDate } from './helpers.js';
 
 const todosRef = getColRef('todos');
 
-export const addTodo = async (e) => {
+export const showFormHandler = (e) => {
+  modalOveryalEl.classList.remove('hidden');
+  modalEl.classList.remove('hidden');
+};
+
+export const hideFormHandler = (e) => {
+  modalOveryalEl.classList.add('hidden');
+  modalEl.classList.add('hidden');
+  btnShowFormEl.blur();
+};
+
+export const addTodoHandler = async (e) => {
   e.preventDefault();
 
   try {
-    if (!inputEl.value) return;
+    // Get form data
+    const shallowData = [...new FormData(e.target)];
+    const data = Object.fromEntries(shallowData);
 
+    const { text, due_to, status, tags: tagsStr } = data;
+
+    const dueTo = formatDate(new Date(due_to), {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const tags = tagsStr.split(' ');
+
+    // Add it to firebase
     await addData(todosRef, {
-      text: inputEl.value,
+      text,
+      dueTo,
+      status,
+      tags,
       timestamp: serverTimestamp(),
     });
 
-    inputEl.value = '';
+    // Reset form
+    e.target.reset();
+
+    // Close form
+    hideFormHandler();
   } catch (err) {
     console.error(err.message);
   }

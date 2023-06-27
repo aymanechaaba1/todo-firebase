@@ -8,14 +8,8 @@ export const clear = (parent) => {
   parent.innerHTML = '';
 };
 
-export const formatDate = (timestamp) =>
-  new Intl.DateTimeFormat(navigator.location, {
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(timestamp);
+export const formatDate = (date, options) =>
+  new Intl.DateTimeFormat(navigator.location, options).format(date);
 
 export const createToastNotification = ({ text }) => {
   Toastify({
