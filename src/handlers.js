@@ -15,7 +15,7 @@ import {
   modalOveryalEl,
   todosContainerEl,
 } from './dom.js';
-import { clear, formatDate, render, update } from './helpers.js';
+import { formatDate, update } from './helpers.js';
 import Todo from './components/Todo.js';
 
 const todosRef = getColRef('todos');

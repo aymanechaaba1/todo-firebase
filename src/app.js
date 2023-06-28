@@ -11,7 +11,7 @@ import {
   searchInputEl,
   todosContainerEl,
 } from './dom.js';
-import { clear, render } from './helpers.js';
+import { update } from './helpers.js';
 import {
   showFormHandler,
   hideFormHandler,
@@ -29,12 +29,12 @@ onSnapshot(query, (snapshot) => {
     id: doc.id,
     text: doc.data().text,
     timestamp: doc.data().timestamp?.toDate(),
+    tags: doc.data().tags,
   }));
 
-  const Todos = data.map((todo) => Todo(todo)).join('');
+  console.log(data);
 
-  clear(todosContainerEl);
-  render(Todos, todosContainerEl);
+  update(data, todosContainerEl, Todo);
 });
 
 btnShowFormEl.addEventListener('click', showFormHandler);
@@ -48,5 +48,3 @@ todosContainerEl.addEventListener('click', removeTodoHandler);
 todosContainerEl.addEventListener('click', editTodoHandler);
 addTodoFormEl.addEventListener('submit', addTodoHandler);
 searchInputEl.addEventListener('input', searchTodoHandler);
-
-//TODO: Search todos
