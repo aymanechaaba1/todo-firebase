@@ -1,11 +1,25 @@
 'use strict';
 
 import { serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
-import { addData, deleteData, getColRef, updateData } from './firebase.js';
-import { btnShowFormEl, modalEl, modalOveryalEl } from './dom.js';
-import { formatDate } from './helpers.js';
+import {
+  addData,
+  deleteData,
+  getColRef,
+  getData,
+  getQuery,
+  updateData,
+} from './firebase.js';
+import {
+  btnShowFormEl,
+  modalEl,
+  modalOveryalEl,
+  todosContainerEl,
+} from './dom.js';
+import { clear, formatDate, render, update } from './helpers.js';
+import Todo from './components/Todo.js';
 
 const todosRef = getColRef('todos');
+const todosQuery = getQuery(todosRef, 'timestamp');
 
 export const showFormHandler = (e) => {
   modalOveryalEl.classList.remove('hidden');
@@ -109,6 +123,27 @@ export const editTodoHandler = async (e) => {
     }
 
     // Update todo
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const searchTodoHandler = async (e) => {
+  try {
+    // Get todos from firebase
+
+    const todos = await getData(todosQuery);
+
+    if (!e.target.value) {
+      update(todos, todosContainerEl, Todo);
+      return;
+    }
+
+    const filteredTodos = todos.filter((todo) =>
+      todo.text.toLowerCase().includes(e.target.value.toLowerCase().trim())
+    );
+
+    update(filteredTodos, todosContainerEl, Todo);
   } catch (err) {
     console.error(err.message);
   }

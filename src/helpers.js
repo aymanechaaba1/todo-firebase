@@ -26,3 +26,9 @@ export const createToastNotification = ({ text }) => {
     stopOnFocus: true, // Prevents dismissing of toast on hover
   }).showToast();
 };
+
+export const update = (data, parent, component) => {
+  const Markup = data.map((entry) => component(entry)).join('');
+  clear(parent);
+  render(Markup, parent);
+};

@@ -5,6 +5,7 @@ import {
   getFirestore,
   collection,
   addDoc,
+  getDocs,
   query,
   orderBy,
   doc,
@@ -30,6 +31,15 @@ export const getColRef = (colName) => collection(db, colName);
 
 export const getQuery = (colRef, by, order = 'desc') =>
   query(colRef, orderBy(by, order));
+
+export const getData = async (query) => {
+  try {
+    const snapshot = await getDocs(query);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (err) {
+    throw err;
+  }
+};
 
 export const addData = async function (ref, doc) {
   try {

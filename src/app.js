@@ -8,6 +8,7 @@ import {
   btnCloseFormEl,
   btnShowFormEl,
   modalOveryalEl,
+  searchInputEl,
   todosContainerEl,
 } from './dom.js';
 import { clear, render } from './helpers.js';
@@ -17,6 +18,7 @@ import {
   addTodoHandler,
   removeTodoHandler,
   editTodoHandler,
+  searchTodoHandler,
 } from './handlers.js';
 
 const todosRef = getColRef('todos');
@@ -45,3 +47,6 @@ document.addEventListener('keydown', (e) => {
 todosContainerEl.addEventListener('click', removeTodoHandler);
 todosContainerEl.addEventListener('click', editTodoHandler);
 addTodoFormEl.addEventListener('submit', addTodoHandler);
+searchInputEl.addEventListener('input', searchTodoHandler);
+
+//TODO: Search todos
