@@ -131,7 +131,6 @@ export const editTodoHandler = async (e) => {
 export const searchTodoHandler = async (e) => {
   try {
     // Get todos from firebase
-
     const todos = await getData(todosQuery);
 
     if (!e.target.value) {
