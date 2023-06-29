@@ -23,9 +23,7 @@
     ></div>
     <div
       class="modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md rounded-lg bg-white p-5 w-2/3 hidden"
-    >
-     
-    </div>
+    ></div>
 
     <div id="app" class="w-full h-screen">
       <div class="flex items-center gap-5 max-w-3xl mx-auto mt-10">
@@ -64,9 +62,13 @@
         </button>
       </div>
 
-      <div
-        class="todos w-full md:w-1/2 p-4 space-y-4 overflow-y-scroll h-full md:max-w-3xl mx-auto"
-      ></div>
+      <div class="flex gap-7 mx-auto max-w-5xl my-5 p-4">
+        <div class="todos flex-1 space-y-4 overflow-y-auto"></div>
+        <!-- SIDEBAR -->
+        <aside
+          class="sidebar card border rounded-lg border-gray-200 py-4 px-10 hidden"
+        ></aside>
+      </div>
     </div>
   </body>
 </html>

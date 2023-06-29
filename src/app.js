@@ -4,12 +4,10 @@ import { onSnapshot } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-f
 import { getColRef, getQuery } from './firebase.js';
 import Todo from './components/Todo.js';
 import {
-  addTodoFormEl,
-  btnCloseFormEl,
   btnShowFormEl,
   modalEl,
-  modalOveryalEl,
   searchInputEl,
+  sidebarEl,
   todosContainerEl,
 } from './dom.js';
 import { update } from './helpers.js';
@@ -20,6 +18,8 @@ import {
   removeTodoHandler,
   editTodoHandler,
   searchTodoHandler,
+  showTodoInfoHandler,
+  closeSidebarHandler,
 } from './handlers.js';
 
 const todosRef = getColRef('todos');
@@ -44,5 +44,7 @@ todosContainerEl.addEventListener('click', removeTodoHandler);
 todosContainerEl.addEventListener('click', editTodoHandler);
 modalEl.addEventListener('submit', addTodoHandler);
 searchInputEl.addEventListener('input', searchTodoHandler);
+todosContainerEl.addEventListener('click', showTodoInfoHandler);
+sidebarEl.addEventListener('click', closeSidebarHandler);
 
 // TODO: format dates (yesterday, today, 2w ago, etc)

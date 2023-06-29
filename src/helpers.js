@@ -32,3 +32,7 @@ export const update = (data, parent, component) => {
   clear(parent);
   render(Markup, parent);
 };
+
+export const hide = (el) => {
+  el.classList.add('hidden');
+};

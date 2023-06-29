@@ -13,11 +13,13 @@ import {
   btnShowFormEl,
   modalEl,
   modalOveryalEl,
+  sidebarEl,
   todosContainerEl,
 } from './dom.js';
-import { clear, formatDate, render, update } from './helpers.js';
+import { clear, formatDate, hide, render, update } from './helpers.js';
 import Todo from './components/Todo.js';
 import AddTodoForm from './components/AddTodoForm.js';
+import TodoInfo from './components/TodoInfo.js';
 
 const todosRef = getColRef('todos');
 const todosQuery = getQuery(todosRef, 'timestamp');
@@ -31,7 +33,6 @@ export const showFormHandler = (e) => {
 };
 
 export const hideFormHandler = (e) => {
-  console.log(e);
   const btnClose = e.target.closest('.btn-close-form');
   if (!btnClose) return;
 
@@ -57,6 +58,8 @@ export const addTodoHandler = async (e) => {
 
       const { text, due_to, status, tags: tagsStr } = data;
 
+      if (!text || !due_to || !status) return;
+
       const dueTo = formatDate(new Date(due_to), {
         year: 'numeric',
         month: '2-digit',
@@ -76,8 +79,11 @@ export const addTodoHandler = async (e) => {
       // Reset form
       e.target.reset();
 
-      // Close form
-      hideFormHandler();
+      // clear & close modal
+      clear(modalEl);
+      [modalEl, modalOveryalEl].forEach((el) => {
+        hide(el);
+      });
     } catch (err) {
       console.error(err.message);
     }
@@ -161,5 +167,33 @@ export const searchTodoHandler = async (e) => {
     update(filteredTodos, todosContainerEl, Todo);
   } catch (err) {
     console.error(err.message);
+  }
+};
+
+export const showTodoInfoHandler = async (e) => {
+  try {
+    const todoClicked = e.target.closest('.todo');
+    if (!todoClicked) return;
+
+    const { id } = todoClicked.dataset;
+
+    const TodoInfoMarkup = await TodoInfo({ id });
+
+    clear(sidebarEl);
+    sidebarEl.classList.remove('hidden');
+    render(TodoInfoMarkup, sidebarEl, 'beforeend');
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const closeSidebarHandler = (e) => {
+  const btnCloseSidebar = e.target.closest('.btn-close-sidebar');
+
+  if (!btnCloseSidebar) return;
+
+  if (btnCloseSidebar) {
+    clear(sidebarEl);
+    sidebarEl.classList.add('hidden');
   }
 };
