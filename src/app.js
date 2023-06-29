@@ -7,6 +7,7 @@ import {
   addTodoFormEl,
   btnCloseFormEl,
   btnShowFormEl,
+  modalEl,
   modalOveryalEl,
   searchInputEl,
   todosContainerEl,
@@ -38,13 +39,10 @@ onSnapshot(query, (snapshot) => {
 });
 
 btnShowFormEl.addEventListener('click', showFormHandler);
-[modalOveryalEl, btnCloseFormEl].forEach((el) => {
-  el.addEventListener('click', hideFormHandler);
-});
-document.addEventListener('keydown', (e) => {
-  e.key === 'Escape' && hideFormHandler();
-});
+modalEl.addEventListener('click', hideFormHandler);
 todosContainerEl.addEventListener('click', removeTodoHandler);
 todosContainerEl.addEventListener('click', editTodoHandler);
-addTodoFormEl.addEventListener('submit', addTodoHandler);
+modalEl.addEventListener('submit', addTodoHandler);
 searchInputEl.addEventListener('input', searchTodoHandler);
+
+// TODO: format dates (yesterday, today, 2w ago, etc)

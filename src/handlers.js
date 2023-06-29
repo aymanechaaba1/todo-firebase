@@ -15,56 +15,72 @@ import {
   modalOveryalEl,
   todosContainerEl,
 } from './dom.js';
-import { formatDate, update } from './helpers.js';
+import { clear, formatDate, render, update } from './helpers.js';
 import Todo from './components/Todo.js';
+import AddTodoForm from './components/AddTodoForm.js';
 
 const todosRef = getColRef('todos');
 const todosQuery = getQuery(todosRef, 'timestamp');
 
 export const showFormHandler = (e) => {
+  const Form = AddTodoForm();
+  render(Form, modalEl);
+
   modalOveryalEl.classList.remove('hidden');
   modalEl.classList.remove('hidden');
 };
 
 export const hideFormHandler = (e) => {
-  modalOveryalEl.classList.add('hidden');
-  modalEl.classList.add('hidden');
-  btnShowFormEl.blur();
+  console.log(e);
+  const btnClose = e.target.closest('.btn-close-form');
+  if (!btnClose) return;
+
+  if (btnClose) {
+    modalOveryalEl.classList.add('hidden');
+    modalEl.classList.add('hidden');
+    btnShowFormEl.blur();
+    clear(modalEl);
+  }
 };
 
 export const addTodoHandler = async (e) => {
   e.preventDefault();
 
-  try {
-    // Get form data
-    const shallowData = [...new FormData(e.target)];
-    const data = Object.fromEntries(shallowData);
+  const form = e.target.closest('.add-todo-form');
+  if (!form) return;
 
-    const { text, due_to, status, tags: tagsStr } = data;
+  if (form) {
+    try {
+      // Get form data
+      const shallowData = [...new FormData(e.target)];
+      const data = Object.fromEntries(shallowData);
 
-    const dueTo = formatDate(new Date(due_to), {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    const tags = tagsStr.split(' ');
+      const { text, due_to, status, tags: tagsStr } = data;
 
-    // Add it to firebase
-    await addData(todosRef, {
-      text,
-      dueTo,
-      status,
-      tags,
-      timestamp: serverTimestamp(),
-    });
+      const dueTo = formatDate(new Date(due_to), {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      const tags = tagsStr.split(' ');
 
-    // Reset form
-    e.target.reset();
+      // Add it to firebase
+      await addData(todosRef, {
+        text,
+        dueTo,
+        status,
+        tags,
+        timestamp: serverTimestamp(),
+      });
 
-    // Close form
-    hideFormHandler();
-  } catch (err) {
-    console.error(err.message);
+      // Reset form
+      e.target.reset();
+
+      // Close form
+      hideFormHandler();
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 };
 
