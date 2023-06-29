@@ -23,3 +23,4 @@
 
 - Full CRUD Functionality
 - Search Todos
+- Show Todo Info
