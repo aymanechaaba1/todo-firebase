@@ -1,4 +1,8 @@
+import { getTodayDate } from '../helpers.js';
+
 const AddTodoForm = () => {
+  const today = getTodayDate();
+
   return `
     <form class="add-todo-form relative space-y-4 mx-auto max-w-3xl">
       <svg
@@ -35,8 +39,8 @@ const AddTodoForm = () => {
         <input
           type="date"
           name="due_to"
-          value="2023-06-27"
-          min="2023-06-27"
+          value=${today}
+          min=${today}
           max=""
           class="due-to-input rounded-md border py-2 px-4"
         />
@@ -50,7 +54,7 @@ const AddTodoForm = () => {
           id="status"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md py-2 px-4 focus:ring-blue-500 focus:border-blue-500 md:w-1/2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          <option value="tobedone">To Be Done</option>
+          <option value="to_be_done">To Be Done</option>
           <option value="doing">Doing</option>
           <option value="done" hidden>Done</option>
         </select>

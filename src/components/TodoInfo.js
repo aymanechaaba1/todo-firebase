@@ -8,6 +8,16 @@ async function TodoInfo({ id }) {
 
     const { dueTo, text, timestamp, status, tags } = doc?.data();
 
+    const cleanedStatus = status
+      .split('_')
+      .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
+      .join(' ');
+
+    let statusColor;
+    if (status === 'to_be_done') statusColor = 'orange';
+    if (status === 'doing') statusColor = 'purple';
+    if (status === 'done') statusColor = 'green';
+
     return `
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,14 +36,14 @@ async function TodoInfo({ id }) {
   
       <h1 class="text-5xl my-3">${text}</h1>
       <div
-        class="grid grid-cols-2 gap-y-3 gap-x-10 items-center justify-center mt-6"
+        class="grid grid-cols-[150px_250px] gap-y-3 gap-x-10 items-center place-items-center mt-6"
       >
         <div
           class="uppercase text-xs font-bold bg-gray-50 border border-gray-100 py-2 px-4 rounded-md"
         >
           Due To
         </div>
-        <div class="text-xs py-2 px-4 text-center align-middle rounded-md">
+        <div class="text-xs py-2 px-4 text-center align-middle rounded-md font-bold">
           ${dueTo}
         </div>
         <div
@@ -42,9 +52,9 @@ async function TodoInfo({ id }) {
           Status
         </div>
         <div
-          class="text-xs py-2 px-4 text-center align-middle rounded-md bg-orange-500 border border-orange-600 text-white"
+          class="text-xs py-2 px-4 text-center align-middle rounded-md bg-${statusColor}-500 border border-${statusColor}-600 text-white"
         >
-          ${status}
+          ${cleanedStatus}
         </div>
         <div
           class="uppercase text-xs font-bold bg-gray-50 border border-gray-100 py-2 px-4 rounded-md"
@@ -65,7 +75,13 @@ async function TodoInfo({ id }) {
         >
           Created At
         </div>
-        <div class="text-xs text-center">${formatDate(timestamp.toDate())}</div>
+        <div class="text-xs text-center">${formatDate(timestamp.toDate(), {
+          month: 'short',
+          day: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })}</div>
       </div>
   `;
   } catch (err) {

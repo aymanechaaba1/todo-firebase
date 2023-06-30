@@ -1,15 +1,22 @@
 import { formatDate } from '../helpers.js';
 
-const Todo = function ({ id, text, tags, timestamp }) {
+const Todo = function ({ id, text, tags, timestamp, status }) {
   const date = formatDate(timestamp, {
     month: 'short',
     day: '2-digit',
     year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   });
+
+  let todoBorderColor;
+  if (status === 'to_be_done') todoBorderColor = 'orange';
+  if (status === 'doing') todoBorderColor = 'purple';
+  if (status === 'done') todoBorderColor = 'green';
 
   return `
     <div
-      class="todo border w-full py-2 px-4 rounded-lg space-y-3"
+      class="todo border border-b-${todoBorderColor}-500 w-full py-2 px-4 rounded-lg space-y-3"
       data-id="${id}"
     >
       <div class="flex items-center gap-5">

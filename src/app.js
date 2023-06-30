@@ -31,6 +31,7 @@ onSnapshot(query, (snapshot) => {
     text: doc.data().text,
     timestamp: doc.data().timestamp?.toDate(),
     tags: doc.data().tags,
+    status: doc.data().status,
   }));
 
   console.log(data);

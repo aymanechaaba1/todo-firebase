@@ -36,3 +36,11 @@ export const update = (data, parent, component) => {
 export const hide = (el) => {
   el.classList.add('hidden');
 };
+
+export const getTodayDate = () => {
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const todayMonth = `${today.getMonth() + 1}`.padStart(2, 0);
+  const todayDay = today.getDate();
+  return `${todayYear}-${todayMonth}-${todayDay}`;
+};
