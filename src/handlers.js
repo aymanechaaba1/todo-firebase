@@ -85,19 +85,38 @@ export const addTodoHandler = async (e) => {
   }
 };
 
-export const removeTodoHandler = async (e) => {
-  try {
-    const todoClickedEl = e.target.closest('.todo');
-    const btnTrash = e.target.closest('.btn-trash');
+export const removeTodoHandler = (e) => {
+  const removeTodo = async () => {
+    try {
+      // 1) check if todoifnfo is open
+      // 2) close it if it corresponds to the actual todo we want to remove
+      if (sidebarEl.innerHTML) {
+        const { id: idOpened } = sidebarEl.children[0].dataset;
 
-    if (!todoClickedEl) return;
+        if (id === idOpened) {
+          // clear inner && hide sidebar
+          clear(sidebarEl);
+          hide(sidebarEl);
 
-    const { id } = todoClickedEl.dataset;
+          // Remove it from db
+          await deleteData(id, 'todos');
+        }
 
-    btnTrash && (await deleteData(id, 'todos'));
-  } catch (err) {
-    console.error(err.message);
-  }
+        if (id !== idOpened) await deleteData(id, 'todos');
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const todoClickedEl = e.target.closest('.todo');
+  const btnTrash = e.target.closest('.btn-trash');
+
+  if (!todoClickedEl) return;
+
+  const { id } = todoClickedEl.dataset;
+
+  btnTrash && removeTodo();
 };
 
 export const editTodoHandler = async (e) => {

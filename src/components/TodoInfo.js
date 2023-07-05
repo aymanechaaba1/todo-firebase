@@ -30,6 +30,7 @@ async function TodoInfo({ id }) {
     if (status === 'done') statusColor = 'green';
 
     return `
+      <span data-id="${id}" class="opacity-5">${id}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
