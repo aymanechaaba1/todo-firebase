@@ -17,8 +17,6 @@ async function TodoInfo({ id }) {
       }).format(new Date(`${year} ${month} ${day}`));
     };
 
-    console.log(doc.data());
-
     const cleanedStatus = status
       .split('_')
       .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
@@ -30,7 +28,7 @@ async function TodoInfo({ id }) {
     if (status === 'done') statusColor = 'green';
 
     return `
-      <span data-id="${id}" class="opacity-5">${id}</span>
+      <span data-id="${id}" class="opacity-5 z-0">${id}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

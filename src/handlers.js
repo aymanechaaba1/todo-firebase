@@ -120,48 +120,48 @@ export const removeTodoHandler = (e) => {
 };
 
 export const editTodoHandler = async (e) => {
-  try {
-    const todoClickedEl = e.target.closest('.todo');
-    const btnEdit = e.target.closest('.btn-edit');
+  const editTodo = () => {
+    // Make the input editable
+    const editTodoFormEl = e.target // Crazy DOM Traversing 😇
+      .closest('.btns')
+      .previousElementSibling.querySelector('.edit-todo-form');
 
-    if (!todoClickedEl) return;
+    const todoInputEl = e.target // Crazy DOM Traversing 😇
+      .closest('.btns')
+      .previousElementSibling.querySelector('.todo-input');
 
-    const { id } = todoClickedEl.dataset;
+    todoInputEl.removeAttribute('readonly');
+    todoInputEl.focus();
 
-    if (btnEdit) {
-      // Make the input editable
-      const editTodoFormEl = e.target // Crazy DOM Traversing 😇
-        .closest('.btns')
-        .previousElementSibling.querySelector('.edit-todo-form');
+    todoInputEl.addEventListener('blur', (e) => {
+      todoInputEl.setAttribute('readonly', 'true');
+    });
 
-      const todoInputEl = e.target // Crazy DOM Traversing 😇
-        .closest('.btns')
-        .previousElementSibling.querySelector('.todo-input');
+    const update = async (e) => {
+      e.preventDefault();
 
-      todoInputEl.removeAttribute('readonly');
-      todoInputEl.focus();
+      try {
+        await updateData({
+          colName: 'todos',
+          id,
+          newData: { text: todoInputEl.value },
+        });
+      } catch (err) {
+        throw err;
+      }
+    };
 
-      const update = async (e) => {
-        e.preventDefault();
+    editTodoFormEl.addEventListener('submit', update);
+  };
 
-        try {
-          await updateData({
-            colName: 'todos',
-            id,
-            newData: { text: todoInputEl.value },
-          });
-        } catch (err) {
-          throw err;
-        }
-      };
+  const todoClickedEl = e.target.closest('.todo');
+  const btnEdit = e.target.closest('.btn-edit');
 
-      editTodoFormEl.addEventListener('submit', update);
-    }
+  if (!todoClickedEl) return;
 
-    // Update todo
-  } catch (err) {
-    console.error(err.message);
-  }
+  const { id } = todoClickedEl.dataset;
+
+  btnEdit && editTodo();
 };
 
 export const searchTodoHandler = async (e) => {
@@ -210,4 +210,14 @@ export const closeSidebarHandler = (e) => {
     clear(sidebarEl);
     sidebarEl.classList.add('hidden');
   }
+};
+
+export const disableInputHandler = (e) => {
+  const todoClicked = e.target.closest('.todo');
+
+  if (!todoClicked) return;
+
+  const inputEl = todoClicked.querySelector('.todo-input');
+
+  console.log(inputEl);
 };

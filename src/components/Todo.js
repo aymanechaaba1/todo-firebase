@@ -24,7 +24,7 @@ const Todo = function ({ id, text, tags, timestamp, status }) {
           <div class="timestamp text-sm text-gray-400">${date}</div>
           <form class="edit-todo-form">
             <input
-              class="todo-input text-2xl outline-none"
+              class="todo-input w-full text-2xl outline-none cursor-default"
               value="${text}"
               readonly
             />

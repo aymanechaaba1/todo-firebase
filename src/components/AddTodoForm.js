@@ -28,7 +28,7 @@ const AddTodoForm = () => {
         <input
           type="text"
           name="text"
-          class="border rounded-md py-2 px-4 md:flex-1"
+          class="border rounded-md py-2 px-4 md:flex-1 z-1"
           placeholder="Workout"
         />
       </div>
