@@ -8,8 +8,26 @@ export const clear = (parent) => {
   parent.innerHTML = '';
 };
 
-export const formatDate = (date, options) =>
-  new Intl.DateTimeFormat(navigator.location, options).format(date);
+// TODO: format dates (yesterday, today, 2w ago, etc)
+export const formatDate = (timestamp, options) => {
+  const date = new Date(timestamp);
+  const today = new Date();
+
+  const diff = Math.abs(today - date);
+
+  const days = Math.trunc(diff / (24 * 60 * 60 * 1000));
+
+  if (!days) return 'Today';
+  if (days === 1) return 'Yesterday';
+  if (days >= 7 && days <= 35) {
+    const weeks = Math.trunc(days / 7);
+    return `${weeks} ago`;
+  }
+
+  return new Intl.DateTimeFormat(navigator.location, options).format(
+    new Date(timestamp)
+  );
+};
 
 export const createToastNotification = ({ text }) => {
   Toastify({
@@ -41,6 +59,6 @@ export const getTodayDate = () => {
   const today = new Date();
   const todayYear = today.getFullYear();
   const todayMonth = `${today.getMonth() + 1}`.padStart(2, 0);
-  const todayDay = today.getDate();
+  const todayDay = `${today.getDate()}`.padStart(2, 0);
   return `${todayYear}-${todayMonth}-${todayDay}`;
 };

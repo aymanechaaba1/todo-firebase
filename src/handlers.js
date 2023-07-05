@@ -56,15 +56,10 @@ export const addTodoHandler = async (e) => {
       const shallowData = [...new FormData(e.target)];
       const data = Object.fromEntries(shallowData);
 
-      const { text, due_to, status, tags: tagsStr } = data;
+      const { text, due_to: dueTo, status, tags: tagsStr } = data;
 
-      if (!text || !due_to || !status) return;
+      if (!text || !dueTo || !status) return;
 
-      const dueTo = formatDate(new Date(due_to), {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      });
       const tags = tagsStr.split(' ');
 
       // Add it to firebase

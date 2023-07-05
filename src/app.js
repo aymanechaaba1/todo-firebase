@@ -28,13 +28,8 @@ const query = getQuery(todosRef, 'timestamp');
 onSnapshot(query, (snapshot) => {
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
-    text: doc.data().text,
-    timestamp: doc.data().timestamp?.toDate(),
-    tags: doc.data().tags,
-    status: doc.data().status,
+    ...doc.data(),
   }));
-
-  console.log(data);
 
   update(data, todosContainerEl, Todo);
 });
@@ -47,5 +42,3 @@ modalEl.addEventListener('submit', addTodoHandler);
 searchInputEl.addEventListener('input', searchTodoHandler);
 todosContainerEl.addEventListener('click', showTodoInfoHandler);
 sidebarEl.addEventListener('click', closeSidebarHandler);
-
-// TODO: format dates (yesterday, today, 2w ago, etc)

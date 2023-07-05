@@ -1,12 +1,12 @@
 import { formatDate } from '../helpers.js';
 
 const Todo = function ({ id, text, tags, timestamp, status }) {
-  const date = formatDate(timestamp, {
-    month: 'short',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+  const date = formatDate(timestamp.toDate(), {
+    // month: 'short',
+    // day: '2-digit',
+    // year: 'numeric',
+    // hour: '2-digit',
+    // minute: '2-digit',
   });
 
   let todoBorderColor;
@@ -16,7 +16,7 @@ const Todo = function ({ id, text, tags, timestamp, status }) {
 
   return `
     <div
-      class="todo border border-b-${todoBorderColor}-500 w-full py-2 px-4 rounded-lg space-y-3"
+      class="todo border border-b-${todoBorderColor}-500 basis-full py-2 px-4 rounded-lg space-y-3"
       data-id="${id}"
     >
       <div class="flex items-center gap-5">
@@ -66,7 +66,7 @@ const Todo = function ({ id, text, tags, timestamp, status }) {
           </button>
         </div>
       </div>
-      <div class="tags flex items-center gap-4">
+      <div class="tags flex items-center gap-4 overflow-x-auto py-2">
       ${tags
         .map(
           (tag) => `

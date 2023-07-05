@@ -8,6 +8,17 @@ async function TodoInfo({ id }) {
 
     const { dueTo, text, timestamp, status, tags } = doc?.data();
 
+    const formatDueTo = (dueto) => {
+      const [year, month, day] = dueto.split('-');
+      return new Intl.DateTimeFormat(navigator.location, {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+      }).format(new Date(`${year} ${month} ${day}`));
+    };
+
+    console.log(doc.data());
+
     const cleanedStatus = status
       .split('_')
       .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
@@ -36,7 +47,7 @@ async function TodoInfo({ id }) {
   
       <h1 class="text-5xl my-3">${text}</h1>
       <div
-        class="grid grid-cols-[150px_250px] gap-y-3 gap-x-10 items-center place-items-center mt-6"
+        class="grid grid-cols-[150px_250px] gap-y-3 gap-x-10 items-center mt-6"
       >
         <div
           class="uppercase text-xs font-bold bg-gray-50 border border-gray-100 py-2 px-4 rounded-md"
@@ -44,7 +55,7 @@ async function TodoInfo({ id }) {
           Due To
         </div>
         <div class="text-xs py-2 px-4 text-center align-middle rounded-md font-bold">
-          ${dueTo}
+          ${formatDueTo(dueTo)}
         </div>
         <div
           class="uppercase text-xs font-bold bg-gray-50 border border-gray-100 py-2 px-4 rounded-md"
@@ -61,7 +72,7 @@ async function TodoInfo({ id }) {
         >
           Tags
         </div>
-        <div class="space-x-1">
+        <div class="space-x-2 ">
         ${tags
           .map(
             (tag) => `
