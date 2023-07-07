@@ -200,7 +200,10 @@ export const showTodoInfoHandler = async (e) => {
 
     if (showMoreBtn) {
       onSnapshot(getDocRef('todos', id), (doc) => {
-        const TodoInfoMarkup = TodoInfo(doc.data());
+        const TodoInfoMarkup = TodoInfo({
+          id: doc.id,
+          ...doc.data(),
+        });
         clear(sidebarEl);
         sidebarEl.classList.remove('hidden');
         render(TodoInfoMarkup, sidebarEl);
