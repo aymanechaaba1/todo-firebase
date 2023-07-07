@@ -10,7 +10,7 @@ import {
   sidebarEl,
   todosContainerEl,
 } from './dom.js';
-import { update } from './helpers.js';
+import { load, render, update } from './helpers.js';
 import {
   showFormHandler,
   hideFormHandler,
@@ -21,16 +21,19 @@ import {
   showTodoInfoHandler,
   closeSidebarHandler,
 } from './handlers.js';
+import LoadingTodo from './loading/LoadingTodo.js';
 
 const todosRef = getColRef('todos');
 const query = getQuery(todosRef, 'timestamp');
+
+// loading todos
+load(LoadingTodo, todosContainerEl);
 
 onSnapshot(query, (snapshot) => {
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
-
   update(data, todosContainerEl, Todo);
 });
 

@@ -20,6 +20,7 @@ import { clear, formatDate, hide, render, update } from './helpers.js';
 import Todo from './components/Todo.js';
 import AddTodoForm from './components/AddTodoForm.js';
 import TodoInfo from './components/TodoInfo.js';
+import LoadingTodoInfo from './loading/LoadingTodoInfo.js';
 
 const todosRef = getColRef('todos');
 const todosQuery = getQuery(todosRef, 'timestamp');

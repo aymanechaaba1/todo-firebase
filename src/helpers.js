@@ -62,3 +62,10 @@ export const getTodayDate = () => {
   const todayDay = `${today.getDate()}`.padStart(2, 0);
   return `${todayYear}-${todayMonth}-${todayDay}`;
 };
+
+export const load = (LoadingMarkup, parent, length = 2) => {
+  const Loading = Array.from({ length }, (_, i) => i + 1)
+    .map((_) => LoadingMarkup())
+    .join('');
+  render(Loading, parent);
+};
