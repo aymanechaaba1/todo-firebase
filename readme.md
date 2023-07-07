@@ -24,3 +24,4 @@
 - Full CRUD Functionality
 - Search Todos
 - Show Todo Info
+- Skeleton Loading
