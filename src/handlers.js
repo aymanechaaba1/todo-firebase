@@ -1,11 +1,16 @@
 'use strict';
 
-import { serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
+import {
+  serverTimestamp,
+  onSnapshot,
+} from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
+
 import {
   addData,
   deleteData,
   getColRef,
   getData,
+  getDocRef,
   getQuery,
   updateData,
 } from './firebase.js';
@@ -16,11 +21,10 @@ import {
   sidebarEl,
   todosContainerEl,
 } from './dom.js';
-import { clear, formatDate, hide, render, update } from './helpers.js';
+import { clear, hide, render, update } from './helpers.js';
 import Todo from './components/Todo.js';
 import AddTodoForm from './components/AddTodoForm.js';
 import TodoInfo from './components/TodoInfo.js';
-import LoadingTodoInfo from './loading/LoadingTodoInfo.js';
 
 const todosRef = getColRef('todos');
 const todosQuery = getQuery(todosRef, 'timestamp');
@@ -190,13 +194,18 @@ export const showTodoInfoHandler = async (e) => {
     const todoClicked = e.target.closest('.todo');
     if (!todoClicked) return;
 
+    const showMoreBtn = e.target.closest('.btn-show-more');
+
     const { id } = todoClicked.dataset;
 
-    const TodoInfoMarkup = await TodoInfo({ id });
-
-    clear(sidebarEl);
-    sidebarEl.classList.remove('hidden');
-    render(TodoInfoMarkup, sidebarEl, 'beforeend');
+    if (showMoreBtn) {
+      onSnapshot(getDocRef('todos', id), (doc) => {
+        const TodoInfoMarkup = TodoInfo(doc.data());
+        clear(sidebarEl);
+        sidebarEl.classList.remove('hidden');
+        render(TodoInfoMarkup, sidebarEl);
+      });
+    }
   } catch (err) {
     console.error(err.message);
   }

@@ -66,14 +66,21 @@ const Todo = function ({ id, text, tags, timestamp, status }) {
           </button>
         </div>
       </div>
-      <div class="tags flex items-center gap-4 overflow-x-auto py-2">
-      ${tags
-        .map(
-          (tag) => `
-        <small class="text-blue-500 font-medium cursor-pointer">${tag}</small>
-      `
-        )
-        .join('')}
+      <div class="flex items-center">
+        <div class="tags flex-1 flex items-center gap-4 overflow-x-auto py-2">
+        ${tags
+          .map(
+            (tag) => `
+          <small class="text-blue-500 font-medium cursor-pointer">${tag}</small>
+        `
+          )
+          .join('')}
+        </div>
+        <button
+          class="btn-show-more bg-blue-500 rounded-lg py-1 px-2 border border-blue-600 text-white text-center self-end text-xs"
+        >
+          Show More
+        </button>
       </div>
     </div>
   `;

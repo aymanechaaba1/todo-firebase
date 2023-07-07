@@ -2,32 +2,27 @@ import { getDoc } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-fires
 import { getDocRef } from '../firebase.js';
 import { formatDate } from '../helpers.js';
 
-async function TodoInfo({ id }) {
-  try {
-    const doc = await getDoc(getDocRef('todos', id));
+function TodoInfo({ id, dueTo, text, timestamp, status, tags }) {
+  const formatDueTo = (dueto) => {
+    const [year, month, day] = dueto.split('-');
+    return new Intl.DateTimeFormat(navigator.location, {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
+    }).format(new Date(`${year} ${month} ${day}`));
+  };
 
-    const { dueTo, text, timestamp, status, tags } = doc?.data();
+  const cleanedStatus = status
+    .split('_')
+    .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
+    .join(' ');
 
-    const formatDueTo = (dueto) => {
-      const [year, month, day] = dueto.split('-');
-      return new Intl.DateTimeFormat(navigator.location, {
-        month: 'short',
-        day: '2-digit',
-        year: 'numeric',
-      }).format(new Date(`${year} ${month} ${day}`));
-    };
+  let statusColor;
+  if (status === 'to_be_done') statusColor = 'orange';
+  if (status === 'doing') statusColor = 'purple';
+  if (status === 'done') statusColor = 'green';
 
-    const cleanedStatus = status
-      .split('_')
-      .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
-      .join(' ');
-
-    let statusColor;
-    if (status === 'to_be_done') statusColor = 'orange';
-    if (status === 'doing') statusColor = 'purple';
-    if (status === 'done') statusColor = 'green';
-
-    return `
+  return `
       <span data-id="${id}" class="opacity-5 z-0">${id}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +30,7 @@ async function TodoInfo({ id }) {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="btn-close-sidebar w-7 h-7 cursor-pointer text-red-500 float-right m-5"
+        class="btn-close-sidebar w-7 h-7 cursor-pointer text-gray-900 float-right m-5"
       >
         <path
           stroke-linecap="round"
@@ -94,9 +89,6 @@ async function TodoInfo({ id }) {
         })}</div>
       </div>
   `;
-  } catch (err) {
-    throw err;
-  }
 }
 
 export default TodoInfo;

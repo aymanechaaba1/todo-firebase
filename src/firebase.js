@@ -11,7 +11,6 @@ import {
   doc,
   deleteDoc,
   updateDoc,
-  getDoc,
 } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
