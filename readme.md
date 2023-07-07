@@ -25,3 +25,4 @@
 - Search Todos
 - Show Todo Info
 - Skeleton Loading
+- Toast Notifications

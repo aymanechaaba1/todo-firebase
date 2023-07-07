@@ -21,7 +21,13 @@ import {
   sidebarEl,
   todosContainerEl,
 } from './dom.js';
-import { clear, hide, render, update } from './helpers.js';
+import {
+  clear,
+  createToastNotification,
+  hide,
+  render,
+  update,
+} from './helpers.js';
 import Todo from './components/Todo.js';
 import AddTodoForm from './components/AddTodoForm.js';
 import TodoInfo from './components/TodoInfo.js';
@@ -150,6 +156,11 @@ export const editTodoHandler = async (e) => {
           colName: 'todos',
           id,
           newData: { text: todoInputEl.value },
+        });
+
+        // show success notif
+        createToastNotification({
+          text: 'Todo updated successfully 😀',
         });
       } catch (err) {
         throw err;

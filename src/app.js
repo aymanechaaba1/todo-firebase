@@ -10,7 +10,7 @@ import {
   sidebarEl,
   todosContainerEl,
 } from './dom.js';
-import { load, render, update } from './helpers.js';
+import { load, update } from './helpers.js';
 import {
   showFormHandler,
   hideFormHandler,
