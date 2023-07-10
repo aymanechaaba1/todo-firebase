@@ -1,17 +1,8 @@
 'use strict';
 
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  doc,
-  deleteDoc,
-  updateDoc,
-} from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -25,47 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
-export const getColRef = (colName) => collection(db, colName);
-
-export const getQuery = (colRef, by, order = 'desc') =>
-  query(colRef, orderBy(by, order));
-
-export const getData = async (query) => {
-  try {
-    const snapshot = await getDocs(query);
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const addData = async function (ref, doc) {
-  try {
-    const docRef = await addDoc(ref, doc);
-    return docRef;
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const deleteData = async (id, colName) => {
-  try {
-    await deleteDoc(doc(db, colName, id));
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const updateData = async ({ colName, id, newData }) => {
-  try {
-    const docRef = doc(db, colName, id);
-
-    await updateDoc(docRef, newData);
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const getDocRef = (colName, id) => doc(db, colName, id);
+export { auth, db };

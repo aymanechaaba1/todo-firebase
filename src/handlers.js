@@ -1,19 +1,22 @@
 'use strict';
 
 import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
+import {
   serverTimestamp,
   onSnapshot,
-} from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+  getDocs,
+} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js';
 
-import {
-  addData,
-  deleteData,
-  getColRef,
-  getData,
-  getDocRef,
-  getQuery,
-  updateData,
-} from './firebase.js';
+import { auth, db } from './firebase.js';
 import {
   btnShowFormEl,
   modalEl,
@@ -30,10 +33,25 @@ import {
 } from './helpers.js';
 import Todo from './components/Todo.js';
 import AddTodoForm from './components/AddTodoForm.js';
-import TodoInfo from './components/TodoInfo.js';
 
-const todosRef = getColRef('todos');
-const todosQuery = getQuery(todosRef, 'timestamp');
+export const signInHandler = async (e) => {
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const logoutHandler = async (e) => {
+  const btnLogout = e.target.closest('.btn-logout');
+  if (!btnLogout) return;
+
+  try {
+    if (btnLogout) await signOut(auth);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
 
 export const showFormHandler = (e) => {
   const Form = AddTodoForm();
@@ -73,8 +91,11 @@ export const addTodoHandler = async (e) => {
 
       const tags = tagsStr.split(' ');
 
+      // current user
+      const { currentUser } = auth;
+
       // Add it to firebase
-      await addData(todosRef, {
+      await addDoc(collection(db, 'users', currentUser.uid, 'todos'), {
         text,
         dueTo,
         status,
@@ -99,22 +120,10 @@ export const addTodoHandler = async (e) => {
 export const removeTodoHandler = (e) => {
   const removeTodo = async () => {
     try {
-      // 1) check if todoifnfo is open
-      // 2) close it if it corresponds to the actual todo we want to remove
-      if (sidebarEl.innerHTML) {
-        const { id: idOpened } = sidebarEl.children[0].dataset;
+      const { currentUser } = auth;
 
-        if (id === idOpened) {
-          // clear inner && hide sidebar
-          clear(sidebarEl);
-          hide(sidebarEl);
-
-          // Remove it from db
-          await deleteData(id, 'todos');
-        }
-
-        if (id !== idOpened) await deleteData(id, 'todos');
-      }
+      // Remove it from db
+      await deleteDoc(doc(db, 'users', currentUser.uid, 'todos', id));
     } catch (err) {
       console.error(err.message);
     }
@@ -152,12 +161,11 @@ export const editTodoHandler = async (e) => {
       e.preventDefault();
 
       try {
-        await updateData({
-          colName: 'todos',
-          id,
-          newData: { text: todoInputEl.value },
-        });
+        const { currentUser } = auth;
 
+        await updateDoc(doc(db, 'users', currentUser.uid, 'todos', id), {
+          text: todoInputEl.value,
+        });
         // show success notif
         createToastNotification({
           text: 'Todo updated successfully 😀',
@@ -183,7 +191,11 @@ export const editTodoHandler = async (e) => {
 export const searchTodoHandler = async (e) => {
   try {
     // Get todos from firebase
-    const todos = await getData(todosQuery);
+    const { currentUser } = auth;
+    const snapshot = await getDocs(
+      collection(db, 'users', currentUser.uid, 'todos')
+    );
+    const todos = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
     if (!e.target.value) {
       update(todos, todosContainerEl, Todo);

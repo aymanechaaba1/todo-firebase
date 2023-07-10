@@ -77,7 +77,7 @@ const Todo = function ({ id, text, tags, timestamp, status }) {
           .join('')}
         </div>
         <button
-          class="btn-show-more bg-blue-500 rounded-lg py-1 px-2 border border-blue-600 text-white text-center self-end text-xs"
+          class="btn-show-more bg-gray-700 rounded-lg py-1 px-2 text-white text-center self-end text-xs"
         >
           Show More
         </button>
