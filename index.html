@@ -22,7 +22,7 @@
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer type="module" src="src/app.js"></script>
+    <script type="module" src="src/app.js"></script>
     <title>Todo App</title>
   </head>
   <body>
@@ -34,9 +34,7 @@
     ></div>
 
     <div id="app" class="w-full h-screen hidden">
-      <header class="header p-4 border-b border-b-gray-200">
-          
-      </header>
+      <header class="header p-4 border-b border-b-gray-200"></header>
       <div class="flex items-center gap-5 max-w-2xl mx-auto mt-5">
         <div
           class="flex items-center gap-3 flex-1 form border rounded-full py-3 px-7 mx-auto"
@@ -59,7 +57,6 @@
           <input
             type="text"
             name="text-input"
-            id=""
             placeholder="Search a Todo..."
             class="search-input flex-1 w-full outline-none"
             autocomplete="off"
@@ -69,27 +66,33 @@
         <button
           class="btn-show-form bg-teal-400 rounded-full font-bold uppercase p-3 text-white hover:bg-teal-500"
         >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-        
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
         </button>
       </div>
 
-     
-        <div
-          class="todos flex-1 space-y-4 overflow-y-scroll max-w-3xl mx-auto my-10"
-        ></div>
-        
-        
-      </div>
+      <div
+        class="todos flex-1 space-y-4 overflow-y-scroll max-w-3xl mx-auto my-10"
+      ></div>
     </div>
 
     <div id="login" class="grid place-content-center w-full h-screen">
       <button
-        class="signin-btn bg-blue-500 rounded-lg shadow-md text-white text-center space-x-3 py-2 px-5"
+        class="signin-btn flex items-center bg-blue-500 rounded-lg shadow-md text-white text-center space-x-3 py-2 px-5"
       >
-        <ion-icon name="logo-google" class="align-middle"></ion-icon>
+        <ion-icon name="logo-google" class="text-xl"></ion-icon>
         <span>Sign In with Google</span>
       </button>
     </div>

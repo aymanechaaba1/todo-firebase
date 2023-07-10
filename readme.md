@@ -21,9 +21,8 @@
 
 ## Features
 
-- Full CRUD Functionality
+- Auth
+- Add, Delete, Edit a Todo
 - Search Todos
-- Show Todo Info
 - Skeleton Loading
 - Toast Notifications
-- Auth

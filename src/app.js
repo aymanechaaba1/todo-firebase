@@ -21,7 +21,7 @@ import {
   signInBtnEl,
   todosContainerEl,
 } from './dom.js';
-import { clear, render, update } from './helpers.js';
+import { clear, load, render, update } from './helpers.js';
 import {
   addTodoHandler,
   hideFormHandler,
@@ -33,6 +33,7 @@ import {
   searchTodoHandler,
 } from './handlers.js';
 import User from './components/User.js';
+import LoadingTodo from './loading/LoadingTodo.js';
 
 onAuthStateChanged(auth, (user) => {
   const showApp = () => {
@@ -66,6 +67,9 @@ onAuthStateChanged(auth, (user) => {
     };
     addUser();
 
+    // loading todos
+    load(LoadingTodo, todosContainerEl);
+
     // render todos for the logged in user
     onSnapshot(
       query(
@@ -86,17 +90,6 @@ onAuthStateChanged(auth, (user) => {
     hideApp();
   }
 });
-
-// loading todos
-// load(LoadingTodo, todosContainerEl);
-
-// onSnapshot(query, (snapshot) => {
-//   const data = snapshot.docs.map((doc) => ({
-//     id: doc.id,
-//     ...doc.data(),
-//   }));
-//   update(data, todosContainerEl, Todo);
-// });
 
 signInBtnEl.addEventListener('click', signInHandler);
 headerEl.addEventListener('click', logoutHandler);
